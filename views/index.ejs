@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <p>
+      <%= customers.length %> clientes cadastrados!
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <td>Nome</td>
+          <td>Idade</td>
+          <td>Cidade</td>
+          <td>Estado</td>
+          <td>Ações</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% customers.forEach(item => {
+          %>
+          <tr>
+            <td><a href="/edit/<%= item._id %>" ><%= item.name %></a></td>
+            <td><%= item.age %></td>
+            <td><%= item.city %></td>
+            <td><%= item.state %></td>
+            <td>
+              <a href="/edit/<%= item._id %>" title="editar">
+            <img src="/images/edit.png" />
+          </a>
+          <a href="/delete/<%= item._id %>" title="Excluir" onclick="return confirm('tem certeza que deseja excluir?');" >
+            <img src="/images/delete.png" />
+          </a>
+        </td>
+          </tr>
+          <% })
+          %>
+      </tbody>
+    </table>
+    <a href="/new">Cadastra novo</a>
+  </body>
+</html>

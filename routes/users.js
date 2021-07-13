@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
+const db = require('../model/db');
+const userSchema = require('../model/userSchema');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -13,8 +14,12 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  const user = db.insertUser(req.body);
-  res.status(201).json(user);
+    const { error } = userSchema.validate(req.body);
+    if(error)
+        return res.status(422).json({error: error.details});
+
+    const user = db.insertUser(req.body);
+    res.status(201).json(user);
 })
 
 router.put('/:id', (req, res) => {
